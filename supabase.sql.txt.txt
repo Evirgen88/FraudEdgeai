@@ -1,0 +1,83 @@
+-- WARNING: This schema is for context only and is not meant to be run.
+-- Table order and constraints may not be valid for execution.
+
+CREATE TABLE public.custom_scenario_questions (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  scenario_id uuid,
+  question_order integer NOT NULL,
+  question_text text NOT NULL,
+  points integer DEFAULT 10,
+  keywords jsonb,
+  created_at timestamp with time zone DEFAULT now(),
+  CONSTRAINT custom_scenario_questions_pkey PRIMARY KEY (id)
+);
+CREATE TABLE public.custom_scenario_steps (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  scenario_id uuid,
+  step_order integer NOT NULL,
+  timestamp text,
+  level text DEFAULT 'info'::text,
+  message text NOT NULL,
+  is_critical boolean DEFAULT false,
+  created_at timestamp with time zone DEFAULT now(),
+  CONSTRAINT custom_scenario_steps_pkey PRIMARY KEY (id)
+);
+CREATE TABLE public.custom_scenario_test_answers (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  scenario_id uuid,
+  question_id uuid,
+  user_answer text NOT NULL,
+  ai_feedback text,
+  score integer DEFAULT 0,
+  test_session_id uuid,
+  created_at timestamp with time zone DEFAULT now(),
+  CONSTRAINT custom_scenario_test_answers_pkey PRIMARY KEY (id),
+  CONSTRAINT custom_scenario_test_answers_question_id_fkey FOREIGN KEY (question_id) REFERENCES public.custom_scenario_questions(id)
+);
+CREATE TABLE public.custom_scenarios (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  user_id uuid,
+  title text NOT NULL DEFAULT 'Untitled Scenario'::text,
+  description text,
+  category text,
+  difficulty integer,
+  raw_content text,
+  file_name text,
+  file_size integer,
+  test_status text,
+  test_score integer,
+  test_completed_at timestamp with time zone,
+  created_at timestamp with time zone DEFAULT now(),
+  updated_at timestamp with time zone DEFAULT now(),
+  CONSTRAINT custom_scenarios_pkey PRIMARY KEY (id),
+  CONSTRAINT custom_scenarios_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(id)
+);
+CREATE TABLE public.user_progress (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  user_id uuid,
+  scenario_id text NOT NULL,
+  scenario_name text NOT NULL,
+  score integer NOT NULL,
+  answers jsonb NOT NULL,
+  completed_at timestamp with time zone DEFAULT now(),
+  CONSTRAINT user_progress_pkey PRIMARY KEY (id),
+  CONSTRAINT user_progress_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(uuid)
+);
+CREATE TABLE public.users (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  first_name text NOT NULL,
+  last_name text NOT NULL,
+  referral_source text,
+  description text,
+  created_at timestamp with time zone DEFAULT now(),
+  subscription_type text DEFAULT 'free'::text CHECK (subscription_type = ANY (ARRAY['free'::text, 'premium_monthly'::text, 'premium_yearly'::text])),
+  subscription_start date,
+  subscription_end date,
+  daily_scenario_count integer DEFAULT 0,
+  monthly_scenario_count integer DEFAULT 0,
+  last_daily_reset date DEFAULT CURRENT_DATE,
+  last_monthly_reset date DEFAULT date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone),
+  updated_at timestamp with time zone DEFAULT now(),
+  uuid uuid NOT NULL DEFAULT gen_random_uuid() UNIQUE,
+  CONSTRAINT users_pkey PRIMARY KEY (id)
+);

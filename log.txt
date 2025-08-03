@@ -1,0 +1,14 @@
+Download the React DevTools for a better development experience: https://reactjs.org/link/react-devtools
+supabaseService.js:12 🔍 Supabase Configuration Check: Object
+supabaseService.js:37 ✅ Supabase initialized with custom options
+supabaseService.js:38 🔍 URL: https://soktcvtfacyglpvrvpff.supabase.co
+supabaseService.js:39 🔍 Key length: 208
+supabaseService.js:50 🔍 Testing Supabase connectivity...
+AchievementsBadge.jsx:17 🔄 AchievementsBadge data loaded: Object
+AchievementsBadge.jsx:17 🔄 AchievementsBadge data loaded: Object
+App.jsx:132 🔐 Auth state changed: SIGNED_IN
+App.jsx:73 🔄 Updating user session for: meh8871@gmail.com
+site.webmanifest:1 Manifest: Line: 1, column: 1, Syntax error.Understand this error
+supabaseService.js:43 🧪 Running Supabase manual test...
+supabaseService.js:44 Uncaught ReferenceError: supabaseService is not defined
+    at supabaseService.js:44:7

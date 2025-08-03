@@ -1,0 +1,101 @@
+You're an expert AI developer assistant. Please help me create a **modern, multilingual (Turkish + English)**, responsive, browser-based simulation tool called **FintechEdge AI**.
+
+🧠 Purpose:
+This React-based application will help users (developers, fraud analysts, QA testers) learn how to detect and analyze **real-world payment fraud patterns** like:
+- 3D Secure timeout
+- Retry frauds
+- Card cloning
+- Timing attacks
+
+The app will visually simulate a fraud case through logs and ask the user investigative questions after key steps.
+
+---
+
+🌐 Project Requirements:
+
+1. ✅ **Framework & Stack**
+   - Use **Vite + React**
+   - Use **plain CSS or CSS Modules** (not Tailwind)
+   - Use **i18n internationalization** (Turkish + English) with language switcher
+   - Ensure **full mobile responsiveness** (small screens, tablets, desktops)
+
+2. ✅ **App Features (MVP)**
+
+   **1. Scenario Selector**
+   - Display available fraud scenarios in a dropdown or card layout
+   - Read from static JSON files (`/public/scenarios/*.json`)
+
+   **2. Log Viewer**
+   - Display logs line-by-line with a short delay
+   - Use styled color-coded logs: info, warning, error
+   - Example: `3DS_INIT`, `TXN_PENDING`, `NO_CALLBACK`, `TXN_RETRY`
+
+   **3. GPT-Style Question Panel**
+   - After every few logs, display a question such as:
+     - “What is suspicious about this log?”
+     - “Which fraud rule failed here?”
+     - “What would you alert on?”
+   - User types an answer and clicks “Submit”
+   - App provides pre-defined feedback and suggestions
+
+   **4. Score Summary**
+   - At the end of scenario:
+     - Show score (match keywords)
+     - List of missed findings
+     - Explain what went wrong and how it could’ve been caught
+
+3. ✅ **Multilingual Support**
+   - Use `react-i18next` or similar library
+   - UI texts, questions, feedback should support **TR & EN**
+   - Add a language toggle at the top of the app
+
+4. ✅ **Design Requirements**
+   - **Modern, clean, professional fintech UI**
+   - Responsive layout with mobile-first design
+   - Use visually distinct cards, icons, animation-friendly components
+   - Use system fonts or Google Fonts (no Tailwind required)
+
+---
+
+📁 Suggested Folder Structure:
+
+
+
+fintechedge-ai/
+├── index.html
+├── vite.config.js
+├── package.json
+├── /public/scenarios/3ds_timeout.json
+├── /src
+│ ├── main.jsx
+│ ├── App.jsx
+│ ├── /i18n/index.js
+│ ├── /components
+│ │ ├── ScenarioSelector.jsx
+│ │ ├── LogViewer.jsx
+│ │ ├── QuestionPanel.jsx
+│ │ ├── ScoreSummary.jsx
+│ │ └── LanguageSwitcher.jsx
+│ ├── /data/evaluationRules.js
+│ └── /styles/global.css
+
+
+
+
+---
+
+🎯 First Task:
+Please create a fully functional MVP with:
+
+- One static scenario: **“3D Secure Timeout and Retry Bypass”**
+- Logs:
+  - TXN_INIT, 3DS_INIT, no callback, retry without 3DS, TXN_ACCEPTED
+- Questions:
+  - “Why wasn’t 3DS enforced again?”
+  - “What fraud rule could’ve blocked this retry?”
+- Score system: match key phrases in user input
+- Language switcher for TR ↔ EN
+
+Do not include any backend or GPT API yet. Keep all logic local and modular. Prioritize good UX and clean design.
+
+Once done, we’ll move on to GPT integration and dynamic scenario generation.
