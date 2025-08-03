@@ -1,7 +1,7 @@
 // Debug script for browser console
 // Bu kodu browser console'da çalıştırarak Supabase bağlantısını test et
 
-async function debugSupabaseConnection() {
+export async function debugSupabaseConnection() {
     console.log('🔍 === SUPABASE DEBUG BAŞLADI ===');
     
     try {
